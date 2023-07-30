@@ -31,13 +31,8 @@ char	*ft_foundnewline(int rs, ssize_t i, char *rb, char **remain)
 	if (rs - i - 1)
 		*remain = ft_strdup(&rb[i + 1]);
 	temp = malloc(i + 2);
-	if (!temp)
-	{
-		free(temp);
-		free(rb);
-		return (0);
-	}
-	ft_strncpy(temp, rb, i + 2);
+	if (temp)
+		ft_strncpy(temp, rb, i + 2);
 	free(rb);
 	return (temp);
 }
