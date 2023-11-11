@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 19:16:35 by mayeung           #+#    #+#             */
-/*   Updated: 2023/07/30 19:16:36 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/11/11 23:19:37 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,17 @@ char	*ft_strdup(const char *s)
 
 	i = 0;
 	t = 0;
-	if (s)
+	while (s && s[i])
+		i++;
+	t = malloc(i + 1);
+	i = 0;
+	while (t && s && s[i])
 	{
-		while (s[i])
-			i++;
-		t = malloc(i + 1);
-		if (t)
-		{
-			i = 0;
-			while (s[i])
-			{
-				t[i] = s[i];
-				i++;
-			}
-			t[i] = 0;
-		}
+		t[i] = s[i];
+		i++;
 	}
+	if (t)
+		t[i] = 0;
 	return (t);
 }
 
@@ -65,7 +60,7 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 		i++;
 	return (i);
 }
@@ -76,17 +71,17 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	j;
 
 	i = 0;
-	while (i < size && dst[i])
+	while (dst && dst[i] && i < size)
 		i++;
 	j = 0;
-	while (size && (i + j) < (size - 1) && src[j])
+	while (dst && src && src[j] && i + j + 1 < size)
 	{
 		dst[i + j] = src[j];
 		j++;
 	}
-	if ((i + j) < size)
+	if (dst && i + j < size)
 		dst[i + j] = 0;
-	while (src[j])
+	while (src && src[j])
 		j++;
 	return (i + j);
 }
@@ -96,14 +91,11 @@ void	ft_strncpy(char *dst, const char *src, size_t size)
 	size_t	i;
 
 	i = 0;
-	if (dst && src)
+	while (dst && src && i + 1 < size && src[i])
 	{
-		while (i < size - 1 && size && src[i])
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		if (size)
-			dst[i] = 0;
+		dst[i] = src[i];
+		i++;
 	}
+	if (dst && i < size)
+		dst[i] = 0;
 }
