@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	ft_readbuff(char **remain, char **readbuf, ssize_t *readsize, int fd)
 {
@@ -36,11 +36,11 @@ void	ft_readbuff(char **remain, char **readbuf, ssize_t *readsize, int fd)
 	}
 }
 
-char	*ft_foundnewline(int readsize, ssize_t i, char *readbuf, char **remain)
+char	*ft_foundnewline(ssize_t rs, ssize_t i, char *readbuf, char **remain)
 {
 	char	*temp;
 
-	if (readsize - i - 1)
+	if (rs - i - 1)
 		*remain = ft_strdup(&readbuf[i + 1]);
 	temp = malloc(i + 2);
 	if (temp)

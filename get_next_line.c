@@ -19,7 +19,7 @@ void	ft_readbuff(char **remain, char **readbuf, ssize_t *readsize, int fd)
 	if (!(*remain))
 	{
 		*readbuf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (*readbuf && fd != 2 && fd >= 0)
+		if (*readbuf && fd >= 0)
 		{
 			*readsize = read(fd, *readbuf, BUFFER_SIZE);
 			if (*readsize > 0)
@@ -36,7 +36,7 @@ void	ft_readbuff(char **remain, char **readbuf, ssize_t *readsize, int fd)
 	}
 }
 
-char	*ft_foundnewline(int rs, ssize_t i, char *readbuf, char **remain)
+char	*ft_foundnewline(ssize_t rs, ssize_t i, char *readbuf, char **remain)
 {
 	char	*temp;
 
