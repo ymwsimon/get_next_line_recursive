@@ -38,9 +38,9 @@ int main(int arc, char **arv)
 		close(fd2);
 		close(fd3);
 	}
-	else
+	else if (arc == 2)
 	{
-		fd1 = open("aaaa", O_RDONLY);
+		fd1 = open(arv[1], O_RDONLY);
 
 		line = get_next_line(fd1);
 		printf("%s", line);
