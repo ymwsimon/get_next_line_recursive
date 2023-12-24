@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 19:16:24 by mayeung           #+#    #+#             */
-/*   Updated: 2023/07/30 19:16:25 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/24 15:06:10 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,5 @@ char	*get_next_line(int fd);
 char	*ft_strdup(const char *s);
 
 char	*ft_strjoin(char const *s1, char const *s2);
-
-size_t	ft_strlen(const char *s);
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size);
-
-void	ft_strncpy(char *dst, const char *src, size_t size);
 
 #endif

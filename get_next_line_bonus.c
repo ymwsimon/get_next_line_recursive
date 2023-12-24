@@ -6,47 +6,54 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 19:16:09 by mayeung           #+#    #+#             */
-/*   Updated: 2023/11/11 23:26:12 by mayeung          ###   ########.fr       */
+/*   Updated: 2023/12/24 16:32:26 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-void	ft_readbuff(char **remain, char **readbuf, ssize_t *readsize, int fd)
+void	ft_readbuff(char **remain, char **readbuf, int *readsize, int fd)
 {
-	if (readbuf)
-		*readbuf = 0;
-	if (!(*remain))
+	if (*remain)
+	{
+		*readbuf = *remain;
+		*readsize = 0;
+		while ((*readbuf)[*readsize])
+				(*readsize)++;
+		*remain = NULL;
+	}
+	else
 	{
 		*readbuf = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (*readbuf && fd >= 0)
+		if (*readbuf)
 		{
 			*readsize = read(fd, *readbuf, BUFFER_SIZE);
 			if (*readsize > 0)
-				(*readbuf)[*readsize] = 0;
+				(*readbuf)[*readsize] = '\0';
 		}
 		else
 			*readsize = -1;
 	}
-	else
-	{
-		*readbuf = *remain;
-		*readsize = ft_strlen(*readbuf);
-		*remain = 0;
-	}
 }
 
-char	*ft_foundnewline(ssize_t rs, ssize_t i, char *readbuf, char **remain)
+char	*ft_foundnewline(int i, char *readbuf, char **remain)
 {
-	char	*temp;
+	char	*res;
+	int		j;
 
-	if (rs - i - 1)
+	if (readbuf[i + 1])
 		*remain = ft_strdup(&readbuf[i + 1]);
-	temp = malloc(i + 2);
-	if (temp)
-		ft_strncpy(temp, readbuf, i + 2);
+	res = malloc(sizeof(char) * (i + 2));
+	j = 0;
+	while (res && j <= i)
+	{	
+		res[j] = readbuf[j];
+		j++;
+	}
+	if (res)
+		res[j] = '\0';
 	free(readbuf);
-	return (temp);
+	return (res);
 }
 
 char	*ft_keepread(int fd, char *readbuf)
@@ -63,13 +70,13 @@ char	*ft_keepread(int fd, char *readbuf)
 
 char	*get_next_line(int fd)
 {
-	static char	*remain[4096] = {0};
-	ssize_t		i;
-	ssize_t		readsize;
+	static char	*remain[1024] = {NULL};
+	int			i;
+	int			readsize;
 	char		*readbuf;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 4095)
-		return (0);
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= 1024)
+		return (NULL);
 	ft_readbuff(&remain[fd], &readbuf, &readsize, fd);
 	if (readsize > 0)
 	{
@@ -77,13 +84,13 @@ char	*get_next_line(int fd)
 		while (i < readsize && readbuf[i] != '\n')
 			i++;
 		if (i < readsize)
-			return (ft_foundnewline(readsize, i, readbuf, &remain[fd]));
+			return (ft_foundnewline(i, readbuf, &remain[fd]));
 		else
 			return (ft_keepread(fd, readbuf));
 	}
 	else
 	{
 		free(readbuf);
-		return (0);
+		return (NULL);
 	}
 }
