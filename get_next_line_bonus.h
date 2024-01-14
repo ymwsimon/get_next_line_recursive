@@ -6,7 +6,7 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 19:16:27 by mayeung           #+#    #+#             */
-/*   Updated: 2023/12/24 16:33:25 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/01/14 00:22:39 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,5 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-
-char	*ft_strdup(const char *s);
-
-char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

@@ -6,11 +6,31 @@
 /*   By: mayeung <mayeung@student.42london.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 19:16:09 by mayeung           #+#    #+#             */
-/*   Updated: 2023/12/24 16:32:26 by mayeung          ###   ########.fr       */
+/*   Updated: 2024/01/14 00:31:30 by mayeung          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+char	*ft_strdup(const char *s)
+{
+	size_t	i;
+	char	*t;
+
+	i = 0;
+	while (s && s[i])
+		i++;
+	t = malloc(sizeof(char) * (i + 1));
+	i = 0;
+	while (t && s && s[i])
+	{
+		t[i] = s[i];
+		i++;
+	}
+	if (t)
+		t[i] = '\0';
+	return (t);
+}
 
 void	ft_readbuff(char **remain, char **readbuf, int *readsize, int fd)
 {
@@ -60,9 +80,25 @@ char	*ft_keepread(int fd, char *readbuf)
 {
 	char	*temp;
 	char	*line;
+	size_t	i;
+	size_t	j;
 
+	i = 0;
+	j = 0;
 	temp = get_next_line(fd);
-	line = ft_strjoin(readbuf, temp);
+	while (readbuf && readbuf[i])
+		i++;
+	while (temp && temp[j])
+		j++;
+	line = malloc(sizeof(char) * (i + j + 1));
+	i = -1;
+	while (line && readbuf && readbuf[++i])
+		line[i] = readbuf[i];
+	j = -1 * (temp != NULL);
+	while (line && temp && temp[++j])
+		line[i + j] = temp[j];
+	if (line)
+		line[i + j] = 0;
 	free(temp);
 	free(readbuf);
 	return (line);
